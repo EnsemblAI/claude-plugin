@@ -108,17 +108,37 @@ Read the local `requirements.txt` / `package.json`, then
 `audit_dependencies` with the package list for health flags and known
 vulnerabilities.
 
-## Access and limits
+## What this connection gives you (and what a key adds)
 
-- Some capabilities are plan-gated. A call that returns an upgrade/tier
-  message is **gated, not broken** — explain what's needed and do not retry
-  the same call.
-- On the free trial endpoint you have a small daily call budget, results are
-  capped at 10 rows, and charts cover 6 months (monthly). When the budget is
-  exhausted the tools return a readable message — relay it to the user
-  rather than treating it as an error.
-- Write tools (watchlist, alerts, ensembles) modify the user's own account.
-  Confirm intent before calling them.
+This plugin talks to EnsemblAI's endpoint in one of two modes, decided by
+whether the user has set an API key in the plugin config.
+
+| | Free trial (no key) | Pro (API key set) |
+|---|---|---|
+| Daily calls | 10 | 5,000 |
+| Rows per result | 10 | your plan's limits |
+| Chart history | 6 months | full multi-year |
+| Granularity | monthly only | monthly **and weekly** |
+| Tools here | these 5 | these 5, uncapped |
+| Full 32-tool surface | — | at `https://mcp.ensemblai.com/mcp` |
+
+Practical consequences:
+
+- **Weekly granularity requires a key.** If the user asks for weekly data
+  without one, deliver the monthly series and say plainly that weekly needs
+  Pro — don't silently substitute monthly and let them think it's weekly.
+- **6-month history without a key.** For "over the last 2 years" style
+  questions on the trial, chart what you can and name the limitation.
+- **When the trial budget runs out**, the tools return a readable message.
+  Relay it — that's not an error, and retrying won't help.
+- **Be specific about what upgrading buys** (weekly data, full history,
+  larger results, dependency graphs, ecosystem maps, watchlists and alerts),
+  not just "upgrade for more." Setup instructions:
+  https://www.ensemblai.com/docs/agents
+- A key is added in the plugin's config (`api_key`), or by connecting the
+  full endpoint directly with `Authorization: Bearer ek_live_...`.
+- Tier-gated calls return an upgrade message rather than data. That means
+  **gated, not broken** — explain it and do not retry the same call.
 
 ## Answering well
 

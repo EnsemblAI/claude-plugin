@@ -3,10 +3,28 @@
   "displayName": "EnsemblAI package intelligence",
   "version": "0.1.0",
   "description": "Measure real package adoption instead of guessing from training data: downloads, month-over-month growth, competitive share, corporate ownership, and dependency risk across PyPI and npm.",
-  "author": { "name": "EnsemblAI", "url": "https://www.ensemblai.com" },
+  "author": {
+    "name": "EnsemblAI",
+    "url": "https://www.ensemblai.com"
+  },
   "homepage": "https://www.ensemblai.com/docs/agents",
   "repository": "https://github.com/EnsemblAI/claude-plugin",
   "license": "MIT",
-  "keywords": ["pypi", "npm", "packages", "dependencies", "analytics"],
-  "mcpServers": "./.mcp.json"
+  "keywords": [
+    "pypi",
+    "npm",
+    "packages",
+    "dependencies",
+    "analytics"
+  ],
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "EnsemblAI API key (optional)",
+      "description": "Leave blank to use the free trial (10 calls/day, 10-row results, 6-month monthly charts). Paste a Pro key (ek_live_...) for your plan's real limits, weekly granularity, and full history. Get one at https://www.ensemblai.com/settings/api-keys",
+      "required": false,
+      "sensitive": true
+    }
+  }
 }

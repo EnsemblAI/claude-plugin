@@ -2,7 +2,10 @@
   "mcpServers": {
     "ensemblai": {
       "type": "http",
-      "url": "https://mcp.ensemblai.com/try"
+      "url": "https://mcp.ensemblai.com/try",
+      "headers": {
+        "Authorization": "Bearer ${user_config.api_key}"
+      }
     }
   }
 }
