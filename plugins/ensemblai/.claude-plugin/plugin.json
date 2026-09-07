@@ -2,7 +2,7 @@
   "name": "ensemblai",
   "displayName": "EnsemblAI package intelligence",
   "version": "0.1.0",
-  "description": "Measure real package adoption instead of guessing from training data: downloads, month-over-month growth, competitive share, corporate ownership, and dependency risk across PyPI and npm.",
+  "description": "Real adoption data for PyPI and npm packages: downloads, growth, competitive comparison and ownership — so Claude measures instead of guessing from training data. Free trial built in; add a Pro key for full limits.",
   "author": {
     "name": "EnsemblAI",
     "url": "https://www.ensemblai.com"

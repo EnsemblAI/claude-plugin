@@ -35,6 +35,9 @@ stale or wrong — a package that was dominant at training time may be in
 decline now, and packages released since do not exist in your weights.
 These tools return current, measured data. Prefer them over recall.
 
+Some of those questions need tools that are only on the full endpoint —
+see "Which tools you actually have" below before planning an answer.
+
 ## Why not just query the registries
 
 Registry download endpoints answer one package at a time over a capped
@@ -66,47 +69,59 @@ These are the misreadings that produce confidently wrong answers:
 - **Cross-ecosystem comparisons are directional, not exact.** PyPI and npm
   count downloads differently; compare trends and shares, not raw totals.
 
-## How to pick a tool
+## Which tools you actually have
 
-- Find packages by topic/keyword → `search_packages`, then
-  `get_package_details` / `get_package_metrics` / `get_package_health`
-- Most popular → `top_downloads` · Trending/accelerating → `growth_movers`
-- Trends and charts → `time_series_for_packages`
-- Head-to-head → `compare_packages` (2–10 names)
-- Who publishes what → `list_companies` / `list_company_packages`
-  (corporate owners) or `list_organizations` / `get_organization_packages`
-  (GitHub orgs)
-- Ecosystem structure → `ecosystem_map`, `ecosystem_clusters`
-- Dependencies → `get_package_dependencies`, `package_depgraph`,
-  `audit_dependencies`
-- **Before filtering by a domain, category, license, language, owner or
-  country, call `reference_values` first** to get the real valid values —
-  guessing a filter value returns empty results, not an error.
+**This plugin connects to the EnsemblAI endpoint that exposes five tools.**
+Check what's available before planning a multi-step answer — the rest of the
+catalogue lives on the full endpoint and is NOT callable here.
 
-## Recipes
+Available on this connection:
 
-**Evaluate a dependency before adopting it**
-`get_package_details` → `get_package_health` (deprecated? abandoned?
-single-maintainer?) → `time_series_for_packages` (is adoption growing or
-declining?) → `get_package_dependencies` (what does it drag in?). Report
-adoption trend, maintenance signal, and ownership together — a popular but
-abandoned package is a different risk from an unpopular but well-maintained
-one.
+| Tool | Use it for |
+|---|---|
+| `search_packages` | find packages by topic/keyword/name |
+| `get_package_details` | one package's full profile (downloads, growth, license, domain, owner, GitHub signals) |
+| `top_downloads` | the leaderboard — most-downloaded packages |
+| `compare_packages` | 2–10 packages side by side |
+| `time_series_for_packages` | download history for charting/trends |
 
-**Compare candidate libraries**
-`compare_packages` for the snapshot, then `time_series_for_packages` for
-trajectory. The trend usually matters more than today's absolute numbers:
-a smaller package growing fast is often the better bet.
+On the **full endpoint** (`https://mcp.ensemblai.com/mcp`, Pro key) there are
+32 tools, adding: `growth_movers` (fastest risers), `get_package_health`,
+`get_package_metrics`, `get_package_dependencies`, `package_depgraph`,
+`package_cohort`, `audit_dependencies`, `ecosystem_map`,
+`ecosystem_clusters`, `reference_values`, company/organization lookups, and
+watchlist/alert/ensemble management. If a question needs one of those, say
+which tool would answer it and that it needs the full endpoint — don't
+attempt the call and don't improvise a substitute silently.
 
-**Survey a category**
-`reference_values` (get valid domain/category names) → `top_downloads`
-filtered to that domain → `growth_movers` for the same domain. That gives
-both the incumbents and the challengers.
+Note `get_package_details` is the workhorse here: it already returns
+downloads, growth, license, domain, category, corporate owner and GitHub
+stats for one package, so most single-package questions need exactly one
+call.
 
-**Audit a project's dependencies**
-Read the local `requirements.txt` / `package.json`, then
-`audit_dependencies` with the package list for health flags and known
-vulnerabilities.
+## Recipes (using the five tools available here)
+
+**Is this package healthy / should I adopt it?**
+`get_package_details` for the profile, then `time_series_for_packages` for
+trajectory. Report adoption level *and* direction together — a package with
+big absolute numbers but a steady decline is a different decision from a
+smaller one that's climbing. (Deprecation flags and vulnerability scanning
+need `get_package_health` / `audit_dependencies` on the full endpoint; say so
+rather than guessing.)
+
+**Which of these libraries should I use?**
+`compare_packages` for the snapshot, then `time_series_for_packages` on the
+same names for the trend. State both, and be explicit that download share is
+a popularity signal, not a quality verdict.
+
+**What's popular in this space?**
+`search_packages` on the topic to find candidates, then `top_downloads` for
+scale, then `compare_packages` on the shortlist. (Domain-filtered
+leaderboards and `growth_movers` need the full endpoint.)
+
+**Did X overtake Y, and when?**
+`time_series_for_packages` with both names, then read the crossover from the
+series rather than asserting it from memory.
 
 ## What this connection gives you (and what a key adds)
 
