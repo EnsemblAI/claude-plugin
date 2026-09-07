@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ensemblai": {
+      "type": "http",
+      "url": "https://mcp.ensemblai.com/try"
+    }
+  }
+}

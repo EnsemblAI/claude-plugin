@@ -1,0 +1,24 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "ensemblai",
+  "owner": {
+    "name": "EnsemblAI",
+    "url": "https://www.ensemblai.com"
+  },
+  "description": "Real adoption data for PyPI and npm packages — downloads, growth, ownership, and dependency risk.",
+  "plugins": [
+    {
+      "name": "ensemblai",
+      "displayName": "EnsemblAI package intelligence",
+      "version": "0.1.0",
+      "source": "./plugins/ensemblai",
+      "description": "Measure real package adoption instead of guessing from training data: downloads, month-over-month growth, competitive share, corporate ownership, and dependency risk across PyPI and npm.",
+      "author": { "name": "EnsemblAI", "url": "https://www.ensemblai.com" },
+      "homepage": "https://www.ensemblai.com/docs/agents",
+      "repository": "https://github.com/EnsemblAI/claude-plugin",
+      "license": "MIT",
+      "keywords": ["pypi", "npm", "packages", "dependencies", "analytics", "downloads", "oss"],
+      "category": "data"
+    }
+  ]
+}
