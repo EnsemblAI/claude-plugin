@@ -215,7 +215,7 @@ alert.
 
 | Plan | Price | What the account gets |
 |---|---|---|
-| Free | $0 | Dashboard, top-10 lists, 5 watched packages, 1 saved search, 12 months history (monthly). No API, agent, alerts or exports. |
+| Free | $0 | Dashboard, 10 rows per list (50 on search), 5 watched packages, 1 saved search, 12 months history (monthly). No API, agent, alerts or exports. |
 | Standard | $99.99/mo | AI workspace (100 msgs/mo), 25 alerts, 10 ensembles, dependency graphs, cohort analysis, version adoption, full ecosystem map, 50 CSV exports/mo, and **36 months of history at monthly resolution** (one point per month). **No API or MCP.** |
 | Pro | $249.99/mo | Adds REST API (20K/mo) + MCP (5K/day), **unlimited history at weekly resolution** (one point per week), 500 agent msgs/mo, 100 alerts with email/webhook, 500 exports up to 250K rows, full dep audit, 90-day audit log. |
 
