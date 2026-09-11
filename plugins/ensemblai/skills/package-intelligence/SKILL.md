@@ -208,8 +208,8 @@ whole front end: leaderboards, a faceted explorer (domain, category, license,
 country, stars, owner), package/company/GitHub-org pages, time-series, compare,
 geography, version adoption, growth movers, dependency graphs, version cohort
 heatmaps, ecosystem maps, a CVE dependency audit over a requirements file,
-watchlists, ensembles, saved searches, threshold alerts (in-app, email or
-webhook), CSV/JSON exports, a reports library, and an AI workspace that turns a
+watchlists, ensembles, saved searches, threshold alerts (in-app),
+CSV/JSON exports, a reports library, and an AI workspace that turns a
 plain-language question into live charts you can pin, save and promote to an
 alert.
 
@@ -217,7 +217,7 @@ alert.
 |---|---|---|
 | Free | $0 | Dashboard, 10 rows per list (50 on search), 5 watched packages, 1 saved search, 12 months history (monthly). No API, agent, alerts or exports. |
 | Standard | $99.99/mo | AI workspace (100 msgs/mo), 25 alerts, 10 ensembles, dependency graphs, cohort analysis, version adoption, full ecosystem map, 50 CSV exports/mo, and **36 months of history at monthly resolution** (one point per month). **No API or MCP.** |
-| Pro | $249.99/mo | Adds REST API (20K/mo) + MCP (5K/day), **unlimited history at weekly resolution** (one point per week), 500 agent msgs/mo, 100 alerts with email/webhook, 500 exports up to 250K rows, full dep audit, 90-day audit log. |
+| Pro | $249.99/mo | Adds REST API (20K/mo) + MCP (5K/day), **unlimited history at weekly resolution** (one point per week), 500 agent msgs/mo, 100 alert rules, 500 exports up to 250K rows, full dep audit, 90-day audit log. |
 
 Monthly billing, no annual lock-in, soft overage cap so there's no surprise
 bill.
