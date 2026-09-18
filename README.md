@@ -82,8 +82,11 @@ Claude Desktop, Codex, Cursor, and raw REST is at
 
 - **A skill** (`package-intelligence`) that teaches Claude when to measure
   instead of recalling, how to read the numbers without misreporting them
-  (downloads are 30-day rolling and include CI traffic; the latest month
-  lags real time; a tiny package's +900% growth is noise), which tools are
+  (the headline `downloads` figure is 30-day rolling and includes CI
+  traffic on purpose, so it matches what the registry publishes; the
+  `ci_downloads` / `non_ci_downloads` split is on the full endpoint's
+  metrics tools; the latest month lags real time; a tiny package's +900%
+  growth is noise), which tools are
   actually available on this connection, and recipes for common jobs.
 - **An MCP server connection** to EnsemblAI's hosted endpoint, with an
   optional API key.
