@@ -77,10 +77,10 @@ What EnsemblAI has already built and paid for (all production-measured):
 | | |
 |---|---|
 | 5.3M | packages across PyPI and npm |
-| 1.1B | stored download-history rows, back to 2015 |
+| 1.1B | stored download-history rows — npm from 2015, PyPI from 2018 |
 | 2.6M | pre-computed domain / category / owner rollups |
 | 3.2M | dependency edges, plus 424 discovered communities |
-| 2.1M | packages classified over 72 domains and 519 categories |
+| 2.1M | packages classified over 72 domains and 519 categories (41 domains / 232 categories carry their own aggregate series) |
 | 2,900+ | companies attributed, plus 42,312 GitHub orgs |
 
 Putting PyPI's history on one comparable basis meant re-processing years of
@@ -100,7 +100,12 @@ These are the misreadings that produce confidently wrong answers:
 - **`downloads` is a rolling 30-DAY count**, not all-time or cumulative.
 - **Downloads include CI, mirrors, and automation.** It is a relative
   popularity signal, *not* a count of human users. Never present it as
-  "X people use this."
+  "X people use this." The CI share is not hidden, though (PyPI): with a key,
+  package metrics return `ci_downloads` / `non_ci_downloads`, the REST listing
+  sorts by `ci_percentage`, and `country_grouping` (`ALL` / `US` / `ALL_EX_US`)
+  applies to metrics, series, growth and leaderboards. When the question is
+  "is this growth people or pipelines?", pull those rather than caveating.
+  Mirrors and Docker-layer rebuilds are not flagged as such.
 - **The latest month lags real time** (~1 month for PyPI, ~2 for npm), so
   "latest" is not the current calendar month. Say which month the data is
   anchored to when it matters.

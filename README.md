@@ -29,12 +29,24 @@ Claude measures.
 
 ## Why not just check the registry
 
-Registry download endpoints return one package at a time over a capped
-recent window: no rankings, no growth math, no cross-ecosystem view, no
-ownership or dependency context. EnsemblAI pre-computes all of that —
-multi-year history, leaderboards, month-over-month growth, category-level
-aggregates, ownership attribution, dependency risk, normalized licenses —
-for both ecosystems, one call per answer.
+The free endpoints have hard ceilings, measured against the live services on
+2026-09-14: **api.npmjs.org silently truncates any range to 18 months** (HTTP
+200, correct shape, the series just starts later), its bulk endpoint caps at
+128 packages and rejects `@scoped` names, and pypistats.org serves exactly 180
+days. Neither has search or aggregation, so "most downloaded in X" or "how is
+all of AI/ML trending" cannot be asked at all. EnsemblAI stores the full
+history (npm from 2015, PyPI from 2018) and pre-computes the rest —
+leaderboards, month-over-month growth, whole-segment series across 72 domains
+and 519 categories, ownership for 2,900+ companies, dependency graphs — for
+both ecosystems, one call per answer.
+
+The counts are cleaned, and the cleaning is a parameter rather than a promise:
+PyPI downloads count distribution files only (metadata-sidecar fetches that
+inflate raw logs by up to ~40% are excluded for all time, so year-over-year is
+on one basis), CI traffic is stored separately (`ci_downloads` /
+`non_ci_downloads`, sortable by `ci_percentage`), and `country_grouping`
+(`ALL` / `US` / `ALL_EX_US`) isolates region-skewed traffic. Full methodology:
+<https://www.ensemblai.com/llms.txt>.
 
 ## Free trial vs Pro
 
