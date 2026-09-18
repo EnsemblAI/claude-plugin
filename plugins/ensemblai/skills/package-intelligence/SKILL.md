@@ -44,7 +44,7 @@ post's stale opinion instead of the numbers. Do fall back to the web for what
 genuinely isn't here: release notes, changelogs, API docs, security
 advisories, and source code.
 
-Some of those questions need tools that are only on the full endpoint —
+Some of those questions need tools that only appear once this connection is signed in or has a Pro key —
 see "Which tools you actually have" below before planning an answer.
 
 ## Why not just query the registries
@@ -159,9 +159,10 @@ These are the misreadings that produce confidently wrong answers:
 
 ## Which tools you actually have
 
-**This plugin connects to the EnsemblAI endpoint that exposes five tools.**
+**Without a Pro sign-in or key, this connection exposes five tools.**
 Check what's available before planning a multi-step answer — the rest of the
-catalogue lives on the full endpoint and is NOT callable here.
+catalogue appears on this same connection only once it is signed in or
+configured with a Pro key, and is NOT callable until then.
 
 Available on this connection:
 
@@ -173,13 +174,13 @@ Available on this connection:
 | `compare_packages` | 2–10 packages side by side |
 | `time_series_for_packages` | download history for charting/trends |
 
-On the **full endpoint** (`https://mcp.ensemblai.com/mcp`, Pro key) there are
+Signed in or with a Pro key (same URL, `https://mcp.ensemblai.com/mcp`) there are
 32 tools, adding: `growth_movers` (fastest risers), `get_package_health`,
 `get_package_metrics`, `get_package_dependencies`, `package_depgraph`,
 `package_cohort`, `audit_dependencies`, `ecosystem_map`,
 `ecosystem_clusters`, `reference_values`, company/organization lookups, and
 watchlist/alert/ensemble management. If a question needs one of those, say
-which tool would answer it and that it needs the full endpoint — don't
+which tool would answer it and that it needs a Pro sign-in or key on this connection — don't
 attempt the call and don't improvise a substitute silently.
 
 Note `get_package_details` is the workhorse here: it already returns
@@ -194,7 +195,7 @@ call.
 trajectory. Report adoption level *and* direction together — a package with
 big absolute numbers but a steady decline is a different decision from a
 smaller one that's climbing. (Deprecation flags and vulnerability scanning
-need `get_package_health` / `audit_dependencies` on the full endpoint; say so
+need `get_package_health` / `audit_dependencies` and require a Pro sign-in or key; say so
 rather than guessing.)
 
 **Which of these libraries should I use?**
@@ -205,7 +206,7 @@ a popularity signal, not a quality verdict.
 **What's popular in this space?**
 `search_packages` on the topic to find candidates, then `top_downloads` for
 scale, then `compare_packages` on the shortlist. (Domain-filtered
-leaderboards and `growth_movers` need the full endpoint.)
+leaderboards and `growth_movers` need a Pro sign-in or key.)
 
 **Did X overtake Y, and when?**
 `time_series_for_packages` with both names, then read the crossover from the
@@ -223,7 +224,7 @@ whether the user has set an API key in the plugin config.
 | Chart history | 6 months | full multi-year (weekly resolution on Pro) |
 | Granularity | monthly only | monthly **and weekly** |
 | Tools here | these 5 | these 5, uncapped |
-| Full 32-tool surface | — | at `https://mcp.ensemblai.com/mcp` |
+| Full 32-tool surface | — | on this same connection |
 
 Practical consequences:
 
@@ -238,8 +239,8 @@ Practical consequences:
   larger results, dependency graphs, ecosystem maps, watchlists and alerts),
   not just "upgrade for more." Setup instructions:
   https://www.ensemblai.com/docs/agents
-- A key is added in the plugin's config (`api_key`), or by connecting the
-  full endpoint directly with `Authorization: Bearer ek_live_...`.
+- A key is added in the plugin's config (`api_key`), or by sending
+  `Authorization: Bearer ek_live_...` to the same URL from any MCP client.
 - Tier-gated calls return an upgrade message rather than data. That means
   **gated, not broken** — explain it and do not retry the same call.
 

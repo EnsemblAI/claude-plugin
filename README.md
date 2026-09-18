@@ -10,8 +10,9 @@ and how to use them.
 /plugin install ensemblai@ensemblai
 ```
 
-No account needed to start: it connects to the free trial endpoint
-(10 calls/day, no sign-up).
+No account needed to start: it connects to `https://mcp.ensemblai.com/mcp`,
+which serves a free trial (10 calls/day, no sign-up) until you sign in or add
+a Pro key — then the **same connection** serves all 32 tools.
 
 ## What you can ask, out of the box
 
@@ -48,25 +49,27 @@ on one basis), CI traffic is stored separately (`ci_downloads` /
 (`ALL` / `US` / `ALL_EX_US`) isolates region-skewed traffic. Full methodology:
 <https://www.ensemblai.com/llms.txt>.
 
-## Free trial vs Pro
+## Free trial vs Pro — one URL, two modes
 
-The plugin ships pointing at the trial endpoint, which exposes five read
-tools: `search_packages`, `get_package_details`, `top_downloads`,
-`compare_packages`, `time_series_for_packages`.
+Without a key the plugin runs as the free trial: five read tools
+(`search_packages`, `get_package_details`, `top_downloads`,
+`compare_packages`, `time_series_for_packages`) with trial caps. Add a Pro key
+in the plugin config (`api_key` — optional, set during install) and the same
+connection serves all 32 tools — growth movers, package health, dependency
+graphs and audits, ecosystem maps, company/organization lookups, plus
+watchlists, alerts and saved ensembles — with your plan's real limits.
 
 | | Free trial | With a Pro key |
 |---|---|---|
+| Tools | 5 | all 32 |
 | Calls | 10/day | 5,000/day |
 | Rows per result | 10 | your plan's limits |
 | Chart history | 6 months | full multi-year |
 | Granularity | monthly | monthly **and weekly** |
 
-**Add your key in the plugin config** (`api_key` — optional, set during
-install) to lift those caps on the five tools above.
-
-**Connect the full endpoint** for all 32 tools — growth movers, package
-health, dependency graphs and audits, ecosystem maps, company/organization
-lookups, plus watchlists, alerts and saved ensembles:
+**Not using the plugin?** Any MCP client can connect to the same URL. Anonymous
+is the trial; add the key header (or sign in via OAuth where the client
+supports it) for everything:
 
 ```
 claude mcp add --transport http ensemblai https://mcp.ensemblai.com/mcp \
@@ -84,8 +87,8 @@ Claude Desktop, Codex, Cursor, and raw REST is at
   instead of recalling, how to read the numbers without misreporting them
   (the headline `downloads` figure is 30-day rolling and includes CI
   traffic on purpose, so it matches what the registry publishes; the
-  `ci_downloads` / `non_ci_downloads` split is on the full endpoint's
-  metrics tools; the latest month lags real time; a tiny package's +900%
+  `ci_downloads` / `non_ci_downloads` split is on the metrics tools that
+  appear with a Pro key; the latest month lags real time; a tiny package's +900%
   growth is noise), which tools are
   actually available on this connection, and recipes for common jobs.
 - **An MCP server connection** to EnsemblAI's hosted endpoint, with an
