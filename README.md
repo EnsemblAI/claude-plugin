@@ -37,8 +37,8 @@ The free endpoints have hard ceilings, measured against the live services on
 days. Neither has search or aggregation, so "most downloaded in X" or "how is
 all of AI/ML trending" cannot be asked at all. EnsemblAI stores the full
 history (npm from 2015, PyPI from 2018) and pre-computes the rest —
-leaderboards, month-over-month growth, whole-segment series across 72 domains
-and 519 categories, ownership for 2,900+ companies, dependency graphs — for
+leaderboards, month-over-month growth, whole-segment series across 20 domains
+and 80 categories, ownership for 2,900+ companies, dependency graphs — for
 both ecosystems, one call per answer.
 
 The counts are cleaned, and the cleaning is a parameter rather than a promise:

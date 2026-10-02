@@ -78,9 +78,9 @@ What EnsemblAI has already built and paid for (all production-measured):
 |---|---|
 | 5.3M | packages across PyPI and npm |
 | 1.1B | stored download-history rows — npm from 2015, PyPI from 2018 |
-| 2.6M | pre-computed domain / category / owner rollups |
+| 2.5M | pre-computed domain / category / owner rollups |
 | 3.2M | dependency edges, plus 424 discovered communities |
-| 2.1M | packages classified over 72 domains and 519 categories (41 domains / 232 categories carry their own aggregate series) |
+| 2.1M | packages classified across 20 domains and 80 categories, each with its own aggregate series |
 | 2,900+ | companies attributed, plus 42,312 GitHub orgs |
 
 Putting PyPI's history on one comparable basis meant re-processing years of
