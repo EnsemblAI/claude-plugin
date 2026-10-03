@@ -97,7 +97,8 @@ that still can't answer the question.
 
 These are the misreadings that produce confidently wrong answers:
 
-- **`downloads` is a rolling 30-DAY count**, not all-time or cumulative.
+- **`downloads` is the latest complete CALENDAR MONTH**, not all-time or
+  cumulative, and not a rolling 30 days ending today.
 - **Downloads include CI, mirrors, and automation.** It is a relative
   popularity signal, *not* a count of human users. Never present it as
   "X people use this." The CI share is not hidden, though (PyPI): with a key,

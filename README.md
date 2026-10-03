@@ -11,8 +11,8 @@ and how to use them.
 ```
 
 No account needed to start: it connects to `https://mcp.ensemblai.com/mcp`,
-which serves a free trial (10 calls/day, no sign-up) until you sign in or add
-a Pro key — then the **same connection** serves all 32 tools.
+which serves a free trial (10 calls/day, no sign-up) until you add a Pro key
+in the plugin config — then the **same connection** serves all 32 tools.
 
 ## What you can ask, out of the box
 
@@ -85,8 +85,9 @@ Claude Desktop, Codex, Cursor, and raw REST is at
 
 - **A skill** (`package-intelligence`) that teaches Claude when to measure
   instead of recalling, how to read the numbers without misreporting them
-  (the headline `downloads` figure is 30-day rolling and includes CI
-  traffic on purpose, so it matches what the registry publishes; the
+  (the headline `downloads` figure is the latest complete calendar month
+  and includes CI traffic on purpose, so it stays comparable to the
+  registry; the
   `ci_downloads` / `non_ci_downloads` split is on the metrics tools that
   appear with a Pro key; the latest month lags real time; a tiny package's +900%
   growth is noise), which tools are
