@@ -19,24 +19,30 @@ The plugin has no hooks, runs no local commands and installs no packages.
 
 Each tool call sends the arguments Claude passes to it, such as package names,
 a search query, or a dependency list you ask it to audit, to
-`https://mcp.ensemblai.com/mcp`, and returns the result. If you set an API key,
-it is sent with every request as `Authorization: Bearer <key>`; Claude Code
-stores it as a sensitive setting. Without a key the server applies the free
-trial, counted per IP address, which it stores only as a hash.
+`https://mcp.ensemblai.com/mcp`, and returns the result. The plugin holds no
+API key. If you sign in (`/mcp` in Claude Code), Claude Code keeps the sign-in
+tokens and sends the access token with every request. Without signing in the
+server applies the free trial, counted per IP address, which it stores only as
+a hash.
 
 ## Free trial and Pro
 
-Without a key you get the free trial: 10 calls a day on five read tools
+Without signing in you get the free trial: 10 calls a day on five read tools
 (`search_packages`, `get_package_details`, `top_downloads`, `compare_packages`,
 `time_series_for_packages`), up to 10 rows per result and 6 months of monthly
-data.
+data. The other tools are listed, and calling one asks you to sign in. A
+signed-in Free or Standard account keeps the same trial, with 10 calls a day of
+its own.
 
-With a Pro API key (`ek_live_...`, from
-https://www.ensemblai.com/settings/api-keys) the same connection serves all 32
-tools with your plan's limits (5,000 calls a day), weekly data and full
-history. Seven of those tools add, change or delete your own watchlist entries,
-alerts and ensembles; they are marked destructive, so Claude asks before
-running them.
+Signed in with a Pro account (run `/mcp` in Claude Code and choose the
+EnsemblAI server, or `claude mcp login plugin:ensemblai:ensemblai` in a
+terminal) the same connection serves all 32 tools with your plan's limits
+(5,000 calls a day), weekly data and full history. Seven of those tools
+add, change or delete your own watchlist entries, alerts and ensembles; they
+are marked destructive, so Claude asks before running them.
+
+For scripts and CI, where nobody can open a browser, connect with a Pro API key
+instead: https://www.ensemblai.com/docs/agents
 
 ## Links
 

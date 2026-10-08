@@ -11,12 +11,13 @@ and how to use them.
 ```
 
 No account needed to start: it connects to `https://mcp.ensemblai.com/mcp`,
-which serves a free trial (10 calls/day, no sign-up) until you add a Pro key
-in the plugin config — then the **same connection** serves all 32 tools.
+which serves a free trial (10 calls/day, no sign-up). To use your own account,
+run `/mcp` in Claude Code, choose the EnsemblAI server and sign in: with a Pro
+account the **same connection** serves all 32 tools. There is no key to copy.
 
 ## What you can ask, out of the box
 
-These work on the free trial, with no key:
+These work on the free trial, without signing in:
 
 - *"Is `requests` still the most-used HTTP client, or has `httpx` caught up?"*
 - *"Compare fastapi, flask and django — downloads, stars, quality."*
@@ -49,36 +50,46 @@ on one basis), CI traffic is stored separately (`ci_downloads` /
 (`ALL` / `US` / `ALL_EX_US`) isolates region-skewed traffic. Full methodology:
 <https://www.ensemblai.com/llms.txt>.
 
-## Free trial vs Pro — one URL, two modes
+## Free trial vs Pro — one URL, sign in to switch
 
-Without a key the plugin runs as the free trial: five read tools
+Without signing in the plugin runs as the free trial: five read tools
 (`search_packages`, `get_package_details`, `top_downloads`,
-`compare_packages`, `time_series_for_packages`) with trial caps. Add a Pro key
-in the plugin config (`api_key` — optional, set during install) and the same
-connection serves all 32 tools — growth movers, package health, dependency
-graphs and audits, ecosystem maps, company/organization lookups, plus
-watchlists, alerts and saved ensembles — with your plan's real limits.
+`compare_packages`, `time_series_for_packages`) with trial caps. The other 27
+tools are listed too; calling one asks you to sign in. Sign in with a Pro
+account (`/mcp` in Claude Code) and the same connection serves all 32 tools —
+growth movers, package health, dependency graphs and audits, ecosystem maps,
+company/organization lookups, plus watchlists, alerts and saved ensembles —
+with your plan's real limits.
 
-| | Free trial | With a Pro key |
+| | Free trial | Signed in, Pro |
 |---|---|---|
-| Tools | 5 | all 32 |
+| Tools that answer | 5 | all 32 |
 | Calls | 10/day | 5,000/day |
 | Rows per result | 10 | your plan's limits |
 | Chart history | 6 months | full multi-year |
 | Granularity | monthly | monthly **and weekly** |
 
-**Not using the plugin?** Any MCP client can connect to the same URL. Anonymous
-is the trial; add the key header (or sign in via OAuth where the client
-supports it) for everything:
+The trial's 10 calls a day are shared by everyone on your network address
+until you sign in. A signed-in Free or Standard account keeps the same five
+tools and caps, with 10 calls a day of its own.
+
+**Not using the plugin?** Any MCP client can connect to the same URL and sign
+in the same way:
+
+```
+claude mcp add --transport http ensemblai https://mcp.ensemblai.com/mcp
+```
+
+**Scripts and CI**, where nobody can open a browser, send a Pro API key
+instead (mint one at
+[/settings/api-keys](https://www.ensemblai.com/settings/api-keys)):
 
 ```
 claude mcp add --transport http ensemblai https://mcp.ensemblai.com/mcp \
   --header "Authorization: Bearer ek_live_YOUR_KEY"
 ```
 
-Keys come with the Pro plan — subscribe and mint one at
-[/settings/api-keys](https://www.ensemblai.com/settings/api-keys). Setup for
-Claude Desktop, Codex, Cursor, and raw REST is at
+Setup for Claude Desktop, Codex, Cursor, and raw REST is at
 [ensemblai.com/docs/agents](https://www.ensemblai.com/docs/agents).
 
 ## What's in here
@@ -89,11 +100,11 @@ Claude Desktop, Codex, Cursor, and raw REST is at
   and includes CI traffic on purpose, so it stays comparable to the
   registry; the
   `ci_downloads` / `non_ci_downloads` split is on the metrics tools that
-  appear with a Pro key; the latest month lags real time; a tiny package's +900%
+  need a Pro account; the latest month lags real time; a tiny package's +900%
   growth is noise), which tools are
   actually available on this connection, and recipes for common jobs.
-- **An MCP server connection** to EnsemblAI's hosted endpoint, with an
-  optional API key.
+- **An MCP server connection** to EnsemblAI's hosted endpoint. You sign in
+  to it with your EnsemblAI account; the plugin holds no key.
 
 ## Links
 

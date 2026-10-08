@@ -44,7 +44,7 @@ post's stale opinion instead of the numbers. Do fall back to the web for what
 genuinely isn't here: release notes, changelogs, API docs, security
 advisories, and source code.
 
-Some of those questions need tools that only appear once this connection is signed in or has a Pro key —
+Some of those questions need tools that only answer once the user has signed in with a Pro account —
 see "Which tools you actually have" below before planning an answer.
 
 ## Why not just query the registries
@@ -101,7 +101,7 @@ These are the misreadings that produce confidently wrong answers:
   cumulative, and not a rolling 30 days ending today.
 - **Downloads include CI, mirrors, and automation.** It is a relative
   popularity signal, *not* a count of human users. Never present it as
-  "X people use this." The CI share is not hidden, though (PyPI): with a key,
+  "X people use this." The CI share is not hidden, though (PyPI): on Pro,
   package metrics return `ci_downloads` / `non_ci_downloads`, the REST listing
   sorts by `ci_percentage`, and `country_grouping` (`ALL` / `US` / `ALL_EX_US`)
   applies to metrics, series, growth and leaderboards. When the question is
@@ -160,12 +160,13 @@ These are the misreadings that produce confidently wrong answers:
 
 ## Which tools you actually have
 
-**Without a Pro sign-in or key, this connection exposes five tools.**
-Check what's available before planning a multi-step answer — the rest of the
-catalogue appears on this same connection only once it is signed in or
-configured with a Pro key, and is NOT callable until then.
+**All 32 tools are listed on this connection, but only five answer until the
+user has signed in with a Pro account.** Check before planning a multi-step
+answer. The user signs in by running `/mcp` in Claude Code and choosing the
+EnsemblAI server; there is no API key to set.
 
-Available on this connection:
+These five answer for everyone (not signed in, or signed in on a Free or
+Standard account), with the trial caps described below:
 
 | Tool | Use it for |
 |---|---|
@@ -175,28 +176,30 @@ Available on this connection:
 | `compare_packages` | 2–10 packages side by side |
 | `time_series_for_packages` | download history for charting/trends |
 
-Signed in or with a Pro key (same URL, `https://mcp.ensemblai.com/mcp`) there are
-32 tools, adding: `growth_movers` (fastest risers), `get_package_health`,
-`get_package_metrics`, `get_package_dependencies`, `package_depgraph`,
-`package_cohort`, `audit_dependencies`, `ecosystem_map`,
+The other 27 need a signed-in Pro account: `growth_movers` (fastest risers),
+`get_package_health`, `get_package_metrics`, `get_package_dependencies`,
+`package_depgraph`, `package_cohort`, `audit_dependencies`, `ecosystem_map`,
 `ecosystem_clusters`, `reference_values`, company/organization lookups, and
 watchlist/alert/ensemble management. If a question needs one of those, say
-which tool would answer it and that it needs a Pro sign-in or key on this connection — don't
-attempt the call and don't improvise a substitute silently.
+which tool would answer it and that it needs a signed-in Pro account. Calling
+one before the user has signed in fails with a sign-in request (they run
+`/mcp`); calling one from a Free or Standard account returns a message that it
+needs Pro. Either way, relay it, do not retry, and do not improvise a
+substitute silently.
 
 Note `get_package_details` is the workhorse here: it already returns
 downloads, growth, license, domain, category, corporate owner and GitHub
 stats for one package, so most single-package questions need exactly one
 call.
 
-## Recipes (using the five tools available here)
+## Recipes (using the five tools that always answer)
 
 **Is this package healthy / should I adopt it?**
 `get_package_details` for the profile, then `time_series_for_packages` for
 trajectory. Report adoption level *and* direction together — a package with
 big absolute numbers but a steady decline is a different decision from a
 smaller one that's climbing. (Deprecation flags and vulnerability scanning
-need `get_package_health` / `audit_dependencies` and require a Pro sign-in or key; say so
+need `get_package_health` / `audit_dependencies` and require a signed-in Pro account; say so
 rather than guessing.)
 
 **Which of these libraries should I use?**
@@ -207,41 +210,51 @@ a popularity signal, not a quality verdict.
 **What's popular in this space?**
 `search_packages` on the topic to find candidates, then `top_downloads` for
 scale, then `compare_packages` on the shortlist. (Domain-filtered
-leaderboards and `growth_movers` need a Pro sign-in or key.)
+leaderboards and `growth_movers` need a signed-in Pro account.)
 
 **Did X overtake Y, and when?**
 `time_series_for_packages` with both names, then read the crossover from the
 series rather than asserting it from memory.
 
-## What this connection gives you (and what a key adds)
+## What this connection gives you (and what signing in adds)
 
 This plugin talks to EnsemblAI's endpoint in one of two modes, decided by
-whether the user has set an API key in the plugin config.
+who is signed in to the connection.
 
-| | Free trial (no key) | Pro (API key set) |
+| | Free trial (not signed in, or a Free/Standard account) | Signed in, Pro |
 |---|---|---|
 | Daily calls | 10 | 5,000 |
 | Rows per result | 10 | your plan's limits |
 | Chart history | 6 months | full multi-year (weekly resolution on Pro) |
 | Granularity | monthly only | monthly **and weekly** |
-| Tools here | these 5 | these 5, uncapped |
-| Full 32-tool surface | — | on this same connection |
+| Tools that answer | the 5 above | all 32, uncapped |
+
+Not signed in, the 10 daily calls are shared by everyone on the same network
+address; a signed-in Free or Standard account gets 10 a day of its own. Trial
+responses carry a `_trial` block with the calls remaining and the caps applied.
 
 Practical consequences:
 
-- **Weekly granularity requires a key.** If the user asks for weekly data
-  without one, deliver the monthly series and say plainly that weekly needs
+- **Weekly granularity requires Pro.** If the user asks for weekly data
+  on the trial, deliver the monthly series and say plainly that weekly needs
   Pro — don't silently substitute monthly and let them think it's weekly.
-- **6-month history without a key.** For "over the last 2 years" style
+- **6-month history on the trial.** For "over the last 2 years" style
   questions on the trial, chart what you can and name the limitation.
-- **When the trial budget runs out**, the tools return a readable message.
-  Relay it — that's not an error, and retrying won't help.
+- **On the trial, a signed-in account's `top_downloads` and `search_packages`
+  do not take `domain`, `category` or `offset`.** Such a call is refused
+  without using a trial call; call again without them and say the result is
+  unfiltered, or say that the filter needs Pro.
+- **When the trial budget runs out**, a signed-in account gets a readable
+  message: relay it — that's not an error, and retrying won't help. Not signed
+  in, the next call asks the user to sign in, and a free EnsemblAI account
+  then has its own 10 calls a day.
 - **Be specific about what upgrading buys** (weekly data, full history,
   larger results, dependency graphs, ecosystem maps, watchlists and alerts),
   not just "upgrade for more." Setup instructions:
   https://www.ensemblai.com/docs/agents
-- A key is added in the plugin's config (`api_key`), or by sending
-  `Authorization: Bearer ek_live_...` to the same URL from any MCP client.
+- The user signs in with `/mcp` in Claude Code (their EnsemblAI account, in
+  the browser). API keys are for scripts and CI: `Authorization: Bearer
+  ek_live_...` sent to the same URL from any MCP client.
 - Tier-gated calls return an upgrade message rather than data. That means
   **gated, not broken** — explain it and do not retry the same call.
 

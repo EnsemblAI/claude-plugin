@@ -1,8 +1,8 @@
 {
   "name": "ensemblai",
   "displayName": "EnsemblAI package intelligence",
-  "version": "0.1.5",
-  "description": "Real adoption data for PyPI and npm packages: downloads, growth, competitive comparison and ownership — so Claude measures instead of guessing from training data. Free trial built in; add a Pro key for full limits.",
+  "version": "0.2.0",
+  "description": "Real adoption data for PyPI and npm packages: downloads, growth, competitive comparison and ownership — so Claude measures instead of guessing from training data. Free trial built in; sign in with your EnsemblAI account for your plan's limits.",
   "author": {
     "name": "EnsemblAI",
     "url": "https://www.ensemblai.com"
@@ -17,14 +17,5 @@
     "dependencies",
     "analytics"
   ],
-  "mcpServers": "./.mcp.json",
-  "userConfig": {
-    "api_key": {
-      "type": "string",
-      "title": "EnsemblAI API key (optional)",
-      "description": "Leave blank to use the free trial (10 calls/day, 5 tools, 10-row results, 6-month monthly charts). Paste a Pro key (ek_live_...) and the same connection serves all 32 tools with your plan's real limits, weekly granularity, and full history. Get one at https://www.ensemblai.com/settings/api-keys",
-      "required": false,
-      "sensitive": true
-    }
-  }
+  "mcpServers": "./.mcp.json"
 }
