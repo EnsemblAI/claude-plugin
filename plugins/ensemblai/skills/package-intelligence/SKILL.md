@@ -79,7 +79,7 @@ What EnsemblAI has already built and paid for (all production-measured):
 | 5.3M | packages across PyPI and npm |
 | 1.1B | stored download-history rows — npm from 2015, PyPI from 2018 |
 | 2.5M | pre-computed domain / category / owner rollups |
-| 3.2M | dependency edges, plus 424 discovered communities |
+| 22.3M | dependency edges (PyPI required + npm runtime), plus 554 discovered communities of PyPI packages |
 | 2.1M | packages classified across 20 domains and 80 categories, each with its own aggregate series |
 | 2,900+ | companies attributed, plus 42,312 GitHub orgs |
 
@@ -106,10 +106,16 @@ These are the misreadings that produce confidently wrong answers:
   sorts by `ci_percentage`, and `country_grouping` (`ALL` / `US` / `ALL_EX_US`)
   applies to metrics, series, growth and leaderboards. When the question is
   "is this growth people or pipelines?", pull those rather than caveating.
-  Mirrors and Docker-layer rebuilds are not flagged as such.
-- **The latest month lags real time** (~1 month for PyPI, ~2 for npm), so
-  "latest" is not the current calendar month. Say which month the data is
-  anchored to when it matters.
+  Mirrors and Docker-layer rebuilds are not flagged as such, but PyPI months
+  whose volume installs do not explain are: `surge` on leaderboard, growth and
+  company rows and `surge_flags` on package details (the package out-downloaded
+  a dependency every install requires by more than in the previous 12 months,
+  or volume at least doubled while its CI / Ubuntu share fell away). Counts are
+  not adjusted; mention the flag when ranking or reporting growth for a flagged
+  package (boto3 since April 2026, for example).
+- **"Latest" is the latest COMPLETE calendar month**, not the current one:
+  PyPI's is ready within about a week of month end, npm's about two weeks
+  after. Say which month the data is anchored to when it matters.
 - **`mom_pct` is month-over-month percent change** in downloads.
 - **Percentages are share of that ecosystem's total** for the period.
 - **A tiny package's growth % is noise** — 3 downloads to 30 is +900%.
@@ -162,8 +168,9 @@ These are the misreadings that produce confidently wrong answers:
 
 **All 32 tools are listed on this connection, but only five answer until the
 user has signed in with a Pro account.** Check before planning a multi-step
-answer. The user signs in by running `/mcp` in Claude Code and choosing the
-EnsemblAI server; there is no API key to set.
+answer. In Claude Code the user signs in by running `/mcp` and choosing the
+EnsemblAI server; there is no key to copy. Other MCP clients can send a Pro
+API key instead (`Authorization: Bearer ek_live_...`, see below).
 
 These five answer for everyone (not signed in, or signed in on a Free or
 Standard account), with the trial caps described below:
@@ -186,6 +193,12 @@ one before the user has signed in fails with a sign-in request (they run
 `/mcp`); calling one from a Free or Standard account returns a message that it
 needs Pro. Either way, relay it, do not retry, and do not improvise a
 substitute silently.
+
+`package_depgraph` answers both ways. With `direction='dependents'` it says how
+many packages depend on X and lists the 25 most-downloaded of them (PyPI:
+required dependencies, optional extras excluded; npm: runtime dependencies —
+packages that list X only as a peer dependency, like react-dom for react, are
+not counted yet).
 
 Note `get_package_details` is the workhorse here: it already returns
 downloads, growth, license, domain, category, corporate owner and GitHub

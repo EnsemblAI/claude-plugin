@@ -100,7 +100,8 @@ Setup for Claude Desktop, Codex, Cursor, and raw REST is at
   and includes CI traffic on purpose, so it stays comparable to the
   registry; the
   `ci_downloads` / `non_ci_downloads` split is on the metrics tools that
-  need a Pro account; the latest month lags real time; a tiny package's +900%
+  need a Pro account; "latest" is the latest complete month (PyPI's about a
+  week after month end, npm's about two weeks); a tiny package's +900%
   growth is noise), which tools are
   actually available on this connection, and recipes for common jobs.
 - **An MCP server connection** to EnsemblAI's hosted endpoint. You sign in
