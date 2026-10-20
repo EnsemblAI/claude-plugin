@@ -10,7 +10,7 @@
     {
       "name": "ensemblai",
       "displayName": "EnsemblAI package intelligence",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": "./plugins/ensemblai",
       "description": "Real adoption data for PyPI and npm packages: downloads, growth, competitive comparison and ownership — so Claude measures instead of guessing from training data. Free trial built in; sign in with your EnsemblAI account for your plan's limits.",
       "author": {
